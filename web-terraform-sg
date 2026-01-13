@@ -15,3 +15,15 @@ resource "aws_security_group" "web_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_instance" "web" {
+  ami                    = "ami-07ff62358b87c7116"
+  instance_type          = "t2.micro"
+  subnet_id              = aws_subnet.public.id
+  key_name               = "mykey"
+  vpc_security_group_ids = [aws_security_group.web_sg.id]
+
+  tags = {
+    Name = "frontend-web"
+  }
+}
